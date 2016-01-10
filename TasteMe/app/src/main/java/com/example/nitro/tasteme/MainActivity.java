@@ -86,15 +86,20 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_camera) {
             viewPager.setCurrentItem(0);
+            setTitle(item.getTitle());
         } else if (id == R.id.nav_gallery) {
             viewPager.setCurrentItem(1);
+            setTitle(item.getTitle());
 
         } else if (id == R.id.nav_slideshow) {
             viewPager.setCurrentItem(2);
+            setTitle(item.getTitle());
 
         } else if (id == R.id.nav_share) {
+            setTitle(item.getTitle());
 
         } else if (id == R.id.nav_send) {
+            setTitle(item.getTitle());
 
         }
 
