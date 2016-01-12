@@ -92,11 +92,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
         });
 
-        Button go = (Button) findViewById(R.id.go);
-        go.setOnClickListener(new OnClickListener() {
+        Button register = (Button) findViewById(R.id.sign_up_button);
+        register.setOnClickListener(new OnClickListener() {
             @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            public void onClick(View view) {
+                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
                 LoginActivity.this.startActivity(intent);
             }
         });
@@ -288,6 +288,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                         android.R.layout.simple_dropdown_item_1line, emailAddressCollection);
 
         mEmailView.setAdapter(adapter);
+    }
+
+    public void onRegisterButtonClick(View view) {
+
     }
 
 

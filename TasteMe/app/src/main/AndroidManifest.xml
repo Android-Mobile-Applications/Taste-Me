@@ -6,6 +6,8 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -23,9 +25,20 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".RegisterActivity"
+            android:label="@string/app_name">
+        </activity>
+        <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+
+        <meta-data
+            android:name="com.parse.APPLICATION_ID"
+            android:value="8IuiYL4O1BYRWvDgSWV97l5zet2RxIrtwv9k8D3c" />
+        <meta-data
+            android:name="com.parse.CLIENT_KEY"
+            android:value="kYYqldFfSdoyoGEUYo81TDbzEibYfyrkywcipxS6" />
     </application>
 
 </manifest>

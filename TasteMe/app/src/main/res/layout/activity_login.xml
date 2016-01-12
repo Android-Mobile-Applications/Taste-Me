@@ -8,7 +8,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="#F43B03"
+    android:background="#FFF"
     tools:context="com.example.nitro.tasteme.LoginActivity"
     android:weightSum="1">
 
@@ -16,19 +16,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="taste me"
+        android:text="Taste me"
         android:id="@+id/textView2"
-        android:textColor="#ffffff"
+        android:typeface="monospace"
+        android:textColor="#F43B03"
         android:textSize="60dp"
         android:layout_marginTop="20dp" />
 
     <ImageView
         android:layout_width="290dp"
-        android:layout_height="165dp"
+        android:layout_height="135dp"
         android:id="@+id/imageView2"
         android:layout_gravity="center_horizontal"
         android:src="@drawable/spaghetti"
-        android:layout_marginBottom="40dp" />
+        android:layout_marginBottom="40dp"
+        android:baselineAlignBottom="false" />
 
 
     <!-- Login progress -->
@@ -43,13 +45,15 @@
     <ScrollView
         android:id="@+id/login_form"
         android:layout_width="match_parent"
-        android:layout_height="187dp">
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:id="@+id/email_login_form"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:descendantFocusability="beforeDescendants"
+            android:focusableInTouchMode="true" >
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
@@ -64,7 +68,10 @@
                     android:inputType="textEmailAddress"
                     android:maxLines="1"
                     android:singleLine="true"
-                    android:background="#ffffff"/>
+                    android:allowUndo="true"
+                    android:clickable="false"
+                    android:textAlignment="center"
+                    android:textColor="#000000" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -83,7 +90,8 @@
                     android:inputType="textPassword"
                     android:maxLines="1"
                     android:singleLine="true"
-                    android:background="#ffffff"/>
+                    android:textAlignment="center"
+                    android:textColor="#000000" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -95,21 +103,18 @@
                 android:layout_marginTop="16dp"
                 android:text="@string/action_sign_in"
                 android:textStyle="bold"
-                android:background="#990f05"
+                android:background="#F43B03"
                 android:textColor="#ffffff" />
-
+            <Button
+                android:id="@+id/sign_up_button"
+                style="?android:textAppearanceSmall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/action_register"
+                android:textStyle="bold"
+                android:background="#F43B03"
+                android:textColor="#ffffff" />
         </LinearLayout>
     </ScrollView>
-
-    <Button
-        android:id="@+id/go"
-        style="?android:textAppearanceSmall"
-        android:layout_marginTop="16dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Go without login"
-        android:textStyle="bold"
-        android:background= "#990f05"
-        android:textColor="#ffffff"
-        />
 </LinearLayout>
