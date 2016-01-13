@@ -89,6 +89,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
+        viewPager = (ViewPager)findViewById (R.id.viewPager);
         MyPagerAdapter adapter = new MyPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(adapter);
 
@@ -118,10 +119,12 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+    private class MyPagerAdapter extends FragmentPagerAdapter {
 
         public MyPagerAdapter(FragmentManager fm) {
             super(fm);
         }
+
 
         @Override
         public int getCount() {
