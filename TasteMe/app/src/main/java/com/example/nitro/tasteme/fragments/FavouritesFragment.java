@@ -1,8 +1,11 @@
 package com.example.nitro.tasteme.fragments;
 
 import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,9 +25,28 @@ import org.w3c.dom.Text;
  * Created by Nitro on 2016-01-08.
  */
 public class FavouritesFragment extends Fragment{
+
+    OnItemClickedListener mCallback;
+
+
+    // The container Activity must implement this interface so the frag can deliver messages
+    public interface OnItemClickedListener {
+        /** Called by HeadlinesFragment when a list item is selected */
+        public void onItemClicked();
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.fragment_favourites, container, false);
+
+        // This makes sure that the container activity has implemented
+        // the callback interface. If not, it throws an exception.
+        try {
+            mCallback = (OnItemClickedListener) getActivity();
+        } catch (ClassCastException e) {
+            throw new ClassCastException(getActivity().toString()
+                    + " must implement OnItemClickedListener");
+        }
 
         GridView gridview = (GridView) rootView.findViewById(R.id.gridview);
         gridview.setAdapter(new ImageAdapter(getContext()));
@@ -34,6 +56,8 @@ public class FavouritesFragment extends Fragment{
                                     int position, long id) {
                 Toast.makeText(getContext(), "" + position,
                         Toast.LENGTH_SHORT).show();
+                mCallback.onItemClicked();
+
             }
         });
 
@@ -42,7 +66,7 @@ public class FavouritesFragment extends Fragment{
             @Override
             public void onClick(View v) {
                 TableLayout tlFilters = (TableLayout) rootView.findViewById(R.id.tl_filters);
-                if(tlFilters.getVisibility() == View.VISIBLE) {
+                if (tlFilters.getVisibility() == View.VISIBLE) {
                     tlFilters.setVisibility(View.GONE);
                 } else {
                     tlFilters.setVisibility(View.VISIBLE);
@@ -51,8 +75,20 @@ public class FavouritesFragment extends Fragment{
             }
         });
 
+        /**
+         * This interface must be implemented by activities that contain this
+         * fragment to allow an interaction in this fragment to be communicated
+         * to the activity and potentially other fragments contained in that
+         * activity.
+         * <p/>
+         * See the Android Training lesson <a href=
+         * "http://developer.android.com/training/basics/fragments/communicating.html"
+         * >Communicating with Other Fragments</a> for more information.
+         */
+
         return rootView;
     }
+
 
     public class ImageAdapter extends BaseAdapter {
         private Context mContext;

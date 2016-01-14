@@ -1,5 +1,6 @@
 package com.example.nitro.tasteme;
 
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -7,6 +8,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -18,7 +20,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.nitro.tasteme.fragments.RecipeFragment;
 import com.parse.Parse;
 import com.parse.ParseObject;
 
@@ -27,7 +31,8 @@ import com.example.nitro.tasteme.fragments.HomePageFragment;
 import com.example.nitro.tasteme.fragments.ShoppingCartFragment;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener,
+        FavouritesFragment.OnItemClickedListener {
 
       ViewPager viewPager;
 
@@ -51,10 +56,16 @@ public class MainActivity extends AppCompatActivity
         // [Optional] Power your app with Local Datastore. For more info, go to
         // https://parse.com/docs/android/guide#local-datastore
 
+        //TODO: add in new method
+        viewPager = (ViewPager)findViewById (R.id.viewPager);
+        MyPagerAdapter adapter = new MyPagerAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(adapter);
+        viewPager.setCurrentItem(0);
     }
 
     @Override
     public void onBackPressed() {
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
@@ -80,6 +91,9 @@ public class MainActivity extends AppCompatActivity
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
+        } else if (id == R.id.action_map) {
+            Intent intent = new Intent(this, MapsActivity.class);
+            startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);
@@ -117,6 +131,17 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+
+    }
+
+    @Override
+    public void onItemClicked() {
+        RecipeFragment newRecipeFragment = new RecipeFragment();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.main_container, newRecipeFragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+
     }
 
     private class MyPagerAdapter extends FragmentPagerAdapter {
@@ -124,7 +149,6 @@ public class MainActivity extends AppCompatActivity
         public MyPagerAdapter(FragmentManager fm) {
             super(fm);
         }
-
 
         @Override
         public int getCount() {
