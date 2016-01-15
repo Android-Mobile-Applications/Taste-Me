@@ -14,8 +14,6 @@
         android:layout_gravity="top"
         android:text="Add product" />
 
-
-
         <ListView
             android:id="@+id/shopping_cart_listview"
             android:layout_width="match_parent"

@@ -2,72 +2,37 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/favourites_container"
+    android:id="@+id/rlFavouritesContainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".SearchViewActivity">
 
 
     <SearchView
-        android:id="@+id/searchView"
+        android:id="@+id/svFavourites"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
         android:queryHint="Search..."
-        android:background="#d1d1d1"/>
+        android:background="#d1d1d1" />
 
-    <TextView
-        android:id="@+id/filter"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/searchView"
-        android:text="Filter"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        android:padding="10dp"
-        android:onClick="showFilters"
-        android:clickable="true"/>
+    <HorizontalScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/svFavourites">
 
-    <TableLayout
-        android:id="@+id/tl_filters"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/filter"
-        android:visibility="gone">
-        <TableRow>
-            <CheckBox
-                android:text="Warm"
-                android:textSize="20sp"
-                android:padding="10dp"/>
-            <CheckBox
-                android:text="Cold"
-                android:textSize="20sp"
-                android:padding="10dp"/>
-        </TableRow>
-        <TableRow>
-            <CheckBox
-                android:text="Sweet"
-                android:textSize="20sp"
-                android:padding="10dp"/>
-            <CheckBox
-                android:text="Vegetarian"
-                android:textSize="20sp"
-                android:padding="10dp"/>
-        </TableRow>
-    </TableLayout>
 
-    <GridView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/gridview"
-        android:layout_below="@+id/tl_filters"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:columnWidth="120dp"
-        android:numColumns="auto_fit"
-        android:verticalSpacing="0dp"
-        android:horizontalSpacing="0dp"
-        android:stretchMode="columnWidth"
-        android:gravity="center"
-        android:paddingTop="20dp"
-        />
 
+            <LinearLayout
+                android:id="@+id/llFavourites"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:scrollbars="horizontal"
+                android:clickable="true"
+                android:layout_alignParentBottom="true">
+
+
+            </LinearLayout>
+
+    </HorizontalScrollView>
 </RelativeLayout>

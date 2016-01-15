@@ -5,14 +5,65 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <SearchView
+        android:id="@+id/svHome"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Home"
-        android:id="@+id/textView2"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="210dp" />
+        android:queryHint="Search..."
+        android:background="#d1d1d1"/>
+
+    <TextView
+        android:id="@+id/tvFilter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/svHome"
+        android:text="Filter"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        android:padding="10dp"
+        android:onClick="showFilters"
+        android:clickable="true"/>
+
+    <TableLayout
+        android:id="@+id/tlFilters"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvFilter"
+        android:visibility="gone">
+        <TableRow>
+            <CheckBox
+                android:text="Warm"
+                android:textSize="20sp"
+                android:padding="10dp"/>
+            <CheckBox
+                android:text="Cold"
+                android:textSize="20sp"
+                android:padding="10dp"/>
+        </TableRow>
+        <TableRow>
+            <CheckBox
+                android:text="Sweet"
+                android:textSize="20sp"
+                android:padding="10dp"/>
+            <CheckBox
+                android:text="Vegetarian"
+                android:textSize="20sp"
+                android:padding="10dp"/>
+        </TableRow>
+    </TableLayout>
+
+    <GridView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/gvHome"
+        android:layout_below="@+id/tlFilters"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:columnWidth="120dp"
+        android:numColumns="auto_fit"
+        android:verticalSpacing="0dp"
+        android:horizontalSpacing="0dp"
+        android:stretchMode="columnWidth"
+        android:gravity="center"
+        android:paddingTop="20dp"
+        />
 
 </RelativeLayout>

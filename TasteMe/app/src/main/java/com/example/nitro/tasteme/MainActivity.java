@@ -32,7 +32,8 @@ import com.example.nitro.tasteme.fragments.ShoppingCartFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
-        FavouritesFragment.OnItemClickedListener {
+        FavouritesFragment.OnItemClickedListener,
+        HomePageFragment.OnItemClickedListener {
 
       ViewPager viewPager;
 
