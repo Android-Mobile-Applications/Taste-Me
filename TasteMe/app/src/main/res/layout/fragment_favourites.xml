@@ -20,8 +20,6 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/svFavourites">
 
-
-
             <LinearLayout
                 android:id="@+id/llFavourites"
                 android:layout_width="match_parent"
@@ -30,8 +28,6 @@
                 android:scrollbars="horizontal"
                 android:clickable="true"
                 android:layout_alignParentBottom="true">
-
-
             </LinearLayout>
 
     </HorizontalScrollView>
