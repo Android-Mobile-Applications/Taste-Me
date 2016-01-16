@@ -1,6 +1,7 @@
 package com.example.nitro.tasteme.fragments;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,11 +22,9 @@ import com.example.nitro.tasteme.data.TasteMeDbHelper;
  */
 public class HomeRecipeFragment extends Fragment {
 
+    public TasteMeDbHelper mDbHelper;
+
     private LinearLayout ingredientsList;
-    private LinearLayout llIngredient;
-    private TextView product;
-    private TextView quantity;
-    private TextView measurement;
 
     private String[] testProducts = {
             "eggs", "sugar", "flour", "chocolate", "milk", "butter"
@@ -55,20 +53,22 @@ public class HomeRecipeFragment extends Fragment {
                              Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.fragment_home_recipe, container, false);
 
+        //mDbHelper = TasteMeDbHelper.getInstance(context);
+
         TextView title = (TextView) rootView.findViewById(R.id.tvHomeRecipeName);
         getActivity().setTitle(title.getText().toString());
 
-        ingredientsList = (LinearLayout) rootView.findViewById(R.id.llHomeRecipeIngredients);
+         ingredientsList = (LinearLayout) rootView.findViewById(R.id.llHomeRecipeIngredients);
 
         for(int i = 0; i < testProducts.length; i++){
 
-            llIngredient =  new LinearLayout(getContext());
+            LinearLayout llIngredient =  new LinearLayout(getContext());
             llIngredient.setOrientation(LinearLayout.HORIZONTAL);
-            product = new TextView(getContext());
+            TextView product = new TextView(getContext());
             product.setPadding(10, 10, 10, 10);
-            quantity = new TextView(getContext());
+            TextView quantity = new TextView(getContext());
             quantity.setPadding(10, 10, 10, 10);
-            measurement = new TextView(getContext());
+            TextView measurement = new TextView(getContext());
             measurement.setPadding(10, 10, 10, 10);
             llIngredient.addView(product);
             llIngredient.addView(quantity);
@@ -79,7 +79,6 @@ public class HomeRecipeFragment extends Fragment {
             measurement.setText(testMeasurements[i]);
 
             ingredientsList.addView(llIngredient);
-
         }
 
 
@@ -87,7 +86,7 @@ public class HomeRecipeFragment extends Fragment {
         final ImageButton addToFavourites = (ImageButton) rootView.findViewById(R.id.btnAddToFavourites);
         addToFavourites.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void  onClick(View v) {
 
                 TextView recipeNameView = (TextView) rootView.findViewById(R.id.tvHomeRecipeName);
                 String recipeTitle = recipeNameView.getText().toString();
@@ -95,8 +94,7 @@ public class HomeRecipeFragment extends Fragment {
                 TextView recipeDescView = (TextView) rootView.findViewById(R.id.tvHomeRecipeDescription);
                 String recipeDescription = recipeDescView.getText().toString();
 
-                TasteMeDbHelper mDbHelper = new TasteMeDbHelper(getContext());
-
+                mDbHelper = TasteMeDbHelper.getInstance(getContext());
                 SQLiteDatabase db = mDbHelper.getWritableDatabase();
 
                 ContentValues values = new ContentValues();
@@ -109,7 +107,7 @@ public class HomeRecipeFragment extends Fragment {
                         TasteMeContract.FavouriteRecipesEntry.COLUMN_IMAGE,
                         values);
 
-                Toast.makeText(getContext(), "" + newRowId,
+                Toast.makeText(getContext(),"" + newRowId,
                         Toast.LENGTH_SHORT).show();
 
 
@@ -133,9 +131,12 @@ public class HomeRecipeFragment extends Fragment {
                             null,
                             valuesIngredients);
 
-                    Toast.makeText(getContext(), "" + ingrNewRowId + product.getText().toString(),
+
+                    Toast.makeText(getContext(), "Saved in Favourites" + ingrNewRowId,
                             Toast.LENGTH_SHORT).show();
                 }
+
+                mDbHelper.close();
             }
         });
 

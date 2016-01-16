@@ -1,6 +1,8 @@
 package com.example.nitro.tasteme.fragments;
 
 import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -13,11 +15,15 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.nitro.tasteme.R;
+import com.example.nitro.tasteme.data.TasteMeContract;
+import com.example.nitro.tasteme.data.TasteMeDbHelper;
 
 import java.lang.reflect.Array;
 
 
 public class RecipeFragment extends Fragment {
+
+    public TasteMeDbHelper mDbHelper;
 
     private LinearLayout ingredientsList;
     private String[] testIngredients = {
@@ -47,7 +53,11 @@ public class RecipeFragment extends Fragment {
 
         ingredientsList = (LinearLayout) rootView.findViewById(R.id.llRecipeIngredients);
 
-                for (String ingredient : testIngredients) {
+        mDbHelper = TasteMeDbHelper.getInstance(getContext());
+
+        SQLiteDatabase db = mDbHelper.getReadableDatabase();
+
+        for (String ingredient : testIngredients) {
             TextView tvIngredient = new TextView(getContext());
             tvIngredient.setText(ingredient);
             ingredientsList.addView(tvIngredient);
