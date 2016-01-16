@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -6,24 +7,58 @@
     <LinearLayout
         xmlns:tools="http://schemas.android.com/tools"
         tools:context="com.example.nitro.tasteme.fragments.RecipeFragment"
-        android:id="@+id/llRecipe"
+        android:id="@+id/llHomeRecipe"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:tag="recipe_fragment"
         android:background="#ffffff"
         android:clickable="true"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:weightSum="1">
 
         <ImageView
-            android:id="@+id/ivRecipeImg"
+            android:id="@+id/ivHomeRecipeImg"
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:src="@drawable/sample_4"
             android:layout_weight="0.92"
-            android:scaleType="centerCrop" />
+            android:scaleType="centerCrop"
+            />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:id="@+id/btnAddToFavourites"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@+id/btnLike"
+                android:src="@drawable/ic_favorite_24dp"
+                android:padding="20dp"/>
+
+            <ImageButton
+                android:id="@+id/btnLike"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/ic_thumb_up_24dp"
+                android:padding="20dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/btnLike"
+                android:layout_alignParentRight="true"
+                android:text="Likes 21"
+                android:textSize="13dp"/>
+
+        </RelativeLayout>
+
+
 
         <TextView
-            android:id="@+id/tvRecipeName"
+            android:id="@+id/tvHomeRecipeName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Chocolate Chip Muffins"
@@ -31,7 +66,7 @@
             android:textSize="20sp"/>
 
         <TextView
-            android:id="@+id/tvRecipeDescription"
+            android:id="@+id/tvHomeRecipeDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"
@@ -46,7 +81,7 @@
             android:textSize="20sp"/>
 
         <LinearLayout
-            android:id="@+id/llRecipeIngredients"
+            android:id="@+id/llHomeRecipeIngredients"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"
@@ -56,7 +91,7 @@
         </LinearLayout>
 
         <Button
-            style="?android:textAppearanceSmall"
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Add to shopping cart"

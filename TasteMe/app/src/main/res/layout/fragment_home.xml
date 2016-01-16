@@ -63,7 +63,6 @@
         android:horizontalSpacing="0dp"
         android:stretchMode="columnWidth"
         android:gravity="center"
-        android:paddingTop="20dp"
-        />
+        android:paddingTop="20dp" />
 
 </RelativeLayout>

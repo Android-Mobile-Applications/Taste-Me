@@ -22,6 +22,7 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.nitro.tasteme.fragments.HomeRecipeFragment;
 import com.example.nitro.tasteme.fragments.RecipeFragment;
 import com.parse.Parse;
 import com.parse.ParseObject;
@@ -33,7 +34,7 @@ import com.example.nitro.tasteme.fragments.ShoppingCartFragment;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         FavouritesFragment.OnItemClickedListener,
-        HomePageFragment.OnItemClickedListener {
+        HomePageFragment.OnGridViewItemClickedListener{
 
       ViewPager viewPager;
 
@@ -139,10 +140,19 @@ public class MainActivity extends AppCompatActivity
     public void onItemClicked() {
         RecipeFragment newRecipeFragment = new RecipeFragment();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.main_container, newRecipeFragment);
+        transaction.replace(R.id.mainContainer, newRecipeFragment);
         transaction.addToBackStack(null);
         transaction.commit();
 
+    }
+
+    @Override
+    public void onGridViewItemClicked() {
+        HomeRecipeFragment newHomeRecipeFragment = new HomeRecipeFragment();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.mainContainer, newHomeRecipeFragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 
     private class MyPagerAdapter extends FragmentPagerAdapter {

@@ -1,34 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/shopping_cart"
+    android:id="@+id/rlShoppingCart"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="?android:listPreferredItemHeightLarge"
     android:animateLayoutChanges="true">
 
     <Button
-        android:id="@+id/createItem"
+        style="?android:textAppearanceSmall"
+        android:id="@+id/btnCreateItem"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:layout_gravity="top"
-        android:text="Add product" />
+        android:text="Add product"
+        android:textStyle="bold"
+        android:background="#F43B03"
+        android:textColor="#ffffff" />
 
-        <ListView
-            android:id="@+id/shopping_cart_listview"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/createItem"
-            android:paddingBottom="50dp">
-        </ListView>
+    <ListView
+        android:id="@+id/lvShoppingCart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btnCreateItem"
+        android:paddingBottom="50dp">
+    </ListView>
 
     <Button
-        android:id="@+id/btn_clear"
+        style="?android:textAppearanceSmall"
+        android:id="@+id/btnClear"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:text="Clear all"/>
-
-
+        android:text="Clear all"
+        android:textStyle="bold"
+        android:background="#F43B03"
+        android:textColor="#ffffff" />
 
 </RelativeLayout>

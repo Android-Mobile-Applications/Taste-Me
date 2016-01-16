@@ -22,12 +22,12 @@ import com.example.nitro.tasteme.R;
  */
 public class HomePageFragment extends Fragment {
 
-    OnItemClickedListener mCallback;
+    OnGridViewItemClickedListener mCallback;
 
     // The container Activity must implement this interface so the frag can deliver messages
-    public interface OnItemClickedListener {
+    public interface OnGridViewItemClickedListener {
         /** Called by HeadlinesFragment when a list item is selected */
-        public void onItemClicked();
+        public void onGridViewItemClicked();
     }
 
     @Nullable
@@ -36,7 +36,7 @@ public class HomePageFragment extends Fragment {
         final View rootView = inflater.inflate(R.layout.fragment_home, container, false);
 
         try {
-            mCallback = (OnItemClickedListener) getActivity();
+            mCallback = (OnGridViewItemClickedListener) getActivity();
         } catch (ClassCastException e) {
             throw new ClassCastException(getActivity().toString()
                     + " must implement OnItemClickedListener");
@@ -64,7 +64,7 @@ public class HomePageFragment extends Fragment {
                                     int position, long id) {
                 Toast.makeText(getContext(), "" + position,
                         Toast.LENGTH_SHORT).show();
-                mCallback.onItemClicked();
+                mCallback.onGridViewItemClicked();
 
             }
         });
