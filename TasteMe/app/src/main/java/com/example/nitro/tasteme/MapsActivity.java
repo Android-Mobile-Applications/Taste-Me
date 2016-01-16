@@ -1,14 +1,24 @@
 package com.example.nitro.tasteme;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.util.Random;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -24,23 +34,90 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mapFragment.getMapAsync(this);
     }
 
-
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+        // Adding all markers from database here
+
+        mMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
+            @Override
+            public View getInfoWindow(Marker marker) {
+                return null;
+            }
+
+            @Override
+            public View getInfoContents(Marker marker) {
+                View view = getLayoutInflater().inflate(R.layout.info_window, null);
+                ImageView image = (ImageView) view.findViewById(R.id.badge);
+                TextView title = (TextView) view.findViewById(R.id.title);
+                TextView snippet = (TextView) view.findViewById(R.id.snippet);
+
+                Random rd = new Random();
+                int n = rd.nextInt(9);
+
+                switch (n) {
+                    case 0:
+                        image.setImageResource(R.drawable.sample_0);
+                        break;
+                    case 1:
+                        image.setImageResource(R.drawable.sample_1);
+                        break;
+                    case 2:
+                        image.setImageResource(R.drawable.sample_2);
+                        break;
+                    case 3:
+                        image.setImageResource(R.drawable.sample_3);
+                        break;
+                    case 4:
+                        image.setImageResource(R.drawable.sample_4);
+                        break;
+                    case 5:
+                        image.setImageResource(R.drawable.sample_5);
+                        break;
+                    case 6:
+                        image.setImageResource(R.drawable.sample_6);
+                        break;
+                    case 7:
+                        image.setImageResource(R.drawable.sample_7);
+                        break;
+                    case 8:
+                        image.setImageResource(R.drawable.sample_8);
+                        break;
+                }
+
+                LatLng posotion = marker.getPosition();
+                title.setText(marker.getTitle());
+                snippet.setText(marker.getSnippet());
+
+                return view;
+            }
+        });
 
         // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        mMap.addMarker(new MarkerOptions()
+                .position(new LatLng(4.210484, 101.975766))
+                .title("Curry Mee")
+                .snippet("Malaysia")
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW)));
+        mMap.addMarker(new MarkerOptions()
+                .position(new LatLng(39.074208, 21.824312))
+                .title("Pastitsio")
+                .snippet("Greece")
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
+        mMap.addMarker(new MarkerOptions()
+                .position(new LatLng(-16.290154, -63.588653))
+                .title("Chairo Paceño")
+                .snippet("Bolivia")
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE)));
+
+
+        //mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+    }
+
+    private Bitmap resizeMapIcons(String iconName,int width, int height){
+        Bitmap imageBitmap = BitmapFactory.decodeResource(getResources(), getResources().getIdentifier(iconName, "drawable", getPackageName()));
+        Bitmap resizedBitmap = Bitmap.createScaledBitmap(imageBitmap, width, height, false);
+        return resizedBitmap;
     }
 }
