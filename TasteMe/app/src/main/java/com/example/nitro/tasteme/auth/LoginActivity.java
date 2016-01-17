@@ -1,4 +1,4 @@
-package com.example.nitro.tasteme;
+package com.example.nitro.tasteme.auth;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -38,10 +38,11 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.example.nitro.tasteme.MainActivity;
+import com.example.nitro.tasteme.R;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
-import com.parse.SignUpCallback;
 
 import static android.Manifest.permission.READ_CONTACTS;
 

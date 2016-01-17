@@ -1,4 +1,4 @@
-package com.example.nitro.tasteme;
+package com.example.nitro.tasteme.auth;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,7 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.android.gms.maps.UiSettings;
+import com.example.nitro.tasteme.R;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;

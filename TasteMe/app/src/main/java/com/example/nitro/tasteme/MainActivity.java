@@ -23,6 +23,7 @@ import com.example.nitro.tasteme.maps.MapsActivity;
 import com.example.nitro.tasteme.fragments.FavouritesFragment;
 import com.example.nitro.tasteme.fragments.HomePageFragment;
 import com.example.nitro.tasteme.fragments.ShoppingCartFragment;
+import com.example.nitro.tasteme.services.ReminderService;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
@@ -50,6 +51,7 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        startService(new Intent(this, ReminderService.class));
         // [Optional] Power your app with Local Datastore. For more info, go to
         // https://parse.com/docs/android/guide#local-datastore
 
