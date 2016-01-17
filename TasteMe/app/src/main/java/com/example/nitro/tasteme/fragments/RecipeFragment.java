@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.nitro.tasteme.Ingredient;
 import com.example.nitro.tasteme.R;
 import com.example.nitro.tasteme.data.TasteMeContract;
 import com.example.nitro.tasteme.data.TasteMeDbHelper;
@@ -25,22 +26,10 @@ import java.util.List;
 
 public class RecipeFragment extends Fragment {
 
-    private LinearLayout ingredientsList;
-    private String[] testIngredients = {
-            "2 eggs", "200 gr sugar",
-            "500 gr flour", "100 gr chocolate",
-            "3 drops vanilla", "500 ml milk",
-            "80 grams butter",
-    };
+    TasteMeDbHelper mDbHelper;
 
     public RecipeFragment() {
         // Required empty public constructor
-    }
-
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
     }
 
     @Override
@@ -48,17 +37,102 @@ public class RecipeFragment extends Fragment {
                              Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.fragment_recipe, container, false);
 
-        TextView title = (TextView) rootView.findViewById(R.id.tvRecipeName);
-        getActivity().setTitle(title.getText().toString());
 
-        ingredientsList = (LinearLayout) rootView.findViewById(R.id.llRecipeIngredients);
+        Bundle bundle = getArguments();
+        Integer recipeId = bundle.getInt("recipeId");
 
-        for (String ingredient : testIngredients) {
-            TextView tvIngredient = new TextView(getContext());
-            tvIngredient.setText(ingredient);
-            ingredientsList.addView(tvIngredient);
+        mDbHelper = TasteMeDbHelper.getInstance(getContext());
+
+        SQLiteDatabase db = mDbHelper.getReadableDatabase();
+        //Get recipe Info from SQLITE
+        getRecipeInfoFromSQLite(db, recipeId, rootView);
+
+        //GET ingredients info from SQLITE
+        Cursor cursorRecipeIngr = db.rawQuery("SELECT * FROM " + TasteMeContract.IngredientsEntry.TABLE_NAME +
+                " WHERE " + TasteMeContract.IngredientsEntry.COLUMN_RECIPE_ID + " = ?",
+                new String[]{recipeId.toString()});
+
+        ArrayList<Ingredient> ingredients = new ArrayList<Ingredient>();
+         if(cursorRecipeIngr.moveToFirst()) {
+            do {
+
+                Ingredient ing = getIngredientsForRecipe(cursorRecipeIngr);
+                ingredients.add(ing);
+            } while (cursorRecipeIngr.moveToNext());
+        }
+
+        cursorRecipeIngr.close();
+
+        //SET Ingredients layout
+        LinearLayout ingredientsList = (LinearLayout) rootView.findViewById(R.id.llRecipeIngredients);
+        for (Ingredient ingred  : ingredients) {
+            LinearLayout llIngredient = createIngredientsLayout(ingred);
+            ingredientsList.addView(llIngredient);
         }
 
         return rootView;
+    }
+
+    private Ingredient getIngredientsForRecipe(Cursor cursorRecipeIngr) {
+
+        Ingredient ing = new Ingredient();
+        Integer quantitySQLite = cursorRecipeIngr.getInt(
+                cursorRecipeIngr.getColumnIndexOrThrow(TasteMeContract.IngredientsEntry.COLUMN_QUANTITY));
+
+        String productSQLite = cursorRecipeIngr.getString(
+                cursorRecipeIngr.getColumnIndexOrThrow(TasteMeContract.IngredientsEntry.COLUMN_PRODUCT));
+
+        String measurementSQLite = cursorRecipeIngr.getString(
+                cursorRecipeIngr.getColumnIndexOrThrow(TasteMeContract.IngredientsEntry.COLUMN_MEASUREMENT));
+
+        ing.setProduct(productSQLite);
+        ing.setMeasurement(measurementSQLite);
+        ing.setQuantity(quantitySQLite);
+
+        return ing;
+
+    }
+
+    private void getRecipeInfoFromSQLite(SQLiteDatabase db, Integer recipeId, View rootView) {
+
+        Cursor cursorRecipe = db.rawQuery("SELECT * FROM " + TasteMeContract.FavouriteRecipesEntry.TABLE_NAME +
+                " WHERE " + TasteMeContract.FavouriteRecipesEntry._ID + " = ?", new String[]{recipeId.toString()});
+
+        cursorRecipe.moveToFirst();
+        String recipeName = cursorRecipe.getString(
+                cursorRecipe.getColumnIndexOrThrow(TasteMeContract.FavouriteRecipesEntry.COLUMN_TITLE));
+        TextView title = (TextView) rootView.findViewById(R.id.tvRecipeName);
+        title.setText(recipeName);
+
+        String recipeDesc = cursorRecipe.getString(
+                cursorRecipe.getColumnIndexOrThrow(TasteMeContract.FavouriteRecipesEntry.COLUMN_DESCRIPTION));
+        TextView tvRecDesc = (TextView) rootView.findViewById(R.id.tvRecipeDescription);
+        tvRecDesc.setText(recipeDesc);
+        cursorRecipe.close();
+    }
+
+    private LinearLayout createIngredientsLayout(Ingredient ingred) {
+
+        LinearLayout llIngredient =  new LinearLayout(getContext());
+        llIngredient.setOrientation(LinearLayout.HORIZONTAL);
+
+        TextView product = new TextView(getContext());
+        product.setPadding(10, 10, 10, 10);
+
+        TextView quantity = new TextView(getContext());
+        quantity.setPadding(10, 10, 10, 10);
+
+        TextView measurement = new TextView(getContext());
+        measurement.setPadding(10, 10, 10, 10);
+
+        llIngredient.addView(product);
+        llIngredient.addView(quantity);
+        llIngredient.addView(measurement);
+
+        product.setText(ingred.getProduct());
+        quantity.setText(ingred.getQuantity().toString());
+        measurement.setText(ingred.getMeasurement());
+
+        return  llIngredient;
     }
 }

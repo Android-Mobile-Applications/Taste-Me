@@ -26,7 +26,6 @@
             android:id="@+id/tvRecipeName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Chocolate Chip Muffins"
             android:padding="20dp"
             android:textSize="20sp"/>
 
@@ -35,8 +34,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"
-            android:textSize="15sp"
-            android:text="In a medium bowl, combine flour, 1/2 cup sugar, baking powder, chocolate chips, and salt; mix well. In a small bowl, combine milk, oil and egg; blend well. Add dry ingredients all at once; stir just until dry ingredients are moistened (batter will be lumpy.)"/>
+            android:textSize="15sp" />
 
         <TextView
             android:layout_width="match_parent"
