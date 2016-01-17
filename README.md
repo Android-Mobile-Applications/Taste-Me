@@ -1,13 +1,17 @@
 <h1 align="center">Taste Me</h1>
 
 ### Creativity
+  TasteMe offers an innovative way to get familiar with and enjoy the cusine from every region around the world.
+  The users are given the opportunity to choose traditional meals directly from the map and check their authentic recipes.
 
 ### Value to the end user
+  Users can save their favourite recipes in a local db and also to keep a shopping list.
 
 ### Use custom Views
 
 ### Use animations
  - Progress ring 
+ - Adding rows
 
 ### Device APIs
   1. Connection API 
@@ -23,6 +27,7 @@
  
 ### Application Storage (SQLite)
   1. Saving all favourites recipe to SQLite
+  2. Saving shopping list ingredients
 
 ### Remote data
   1. Parse.com
