@@ -23,13 +23,17 @@ import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.nitro.tasteme.MainActivity;
 import com.example.nitro.tasteme.R;
 import com.example.nitro.tasteme.data.TasteMeContract;
 import com.example.nitro.tasteme.data.TasteMeDbHelper;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -58,11 +62,10 @@ public class FavouritesFragment extends Fragment{
 
     OnItemClickedListener mCallback;
 
-
     // The container Activity must implement this interface so the frag can deliver messages
     public interface OnItemClickedListener {
         /** Called by HeadlinesFragment when a list item is selected */
-        public void onItemClicked();
+        public void onItemClicked(int recipeIndex);
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
@@ -83,43 +86,26 @@ public class FavouritesFragment extends Fragment{
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(1400, 1400);
         layoutParams.gravity = Gravity.CENTER_VERTICAL;
 
-        mDbHelper = TasteMeDbHelper.getInstance(getContext());
+        HashMap<Integer, String> recipeIdTitles = getRecipeTitlesFromSQLite();
 
-        SQLiteDatabase db = mDbHelper.getReadableDatabase();
-
-        Cursor cursorTitles = db.rawQuery("SELECT * FROM " + TasteMeContract.FavouriteRecipesEntry.TABLE_NAME, null);
-
-        List recipeTitles = new ArrayList();
-
-        if(cursorTitles.moveToFirst()) {
-            do {
-                String recipeName = cursorTitles.getString(
-                        cursorTitles.getColumnIndexOrThrow(TasteMeContract.FavouriteRecipesEntry.COLUMN_TITLE));
-                recipeTitles.add(recipeName.toString());
-            } while (cursorTitles.moveToNext());
-        }
-
-        for (int i = 0; i < recipeTitles.size(); i++) {
+        int indexImg = 0;
+        Iterator it = recipeIdTitles.entrySet().iterator();
+        while (it.hasNext()) {
+            final HashMap.Entry pair = (HashMap.Entry)it.next();
 
             LinearLayout rec = new LinearLayout(getContext());
             rec.setOrientation(LinearLayout.VERTICAL);
 
-            TextView tvrecipeTitle = new TextView(getContext());
-            tvrecipeTitle.setText((recipeTitles.get(i).toString()));
-            tvrecipeTitle.setTextSize(20);
-            tvrecipeTitle.setPadding(10, 100, 20, 60);
-            tvrecipeTitle.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-            rec.addView(tvrecipeTitle);
+            TextView tvRecipeTitle = createRecipeTitleTextView(pair.getValue().toString());
+            rec.addView(tvRecipeTitle);
 
-            ImageView img = new ImageView(getContext());
-            img.setLayoutParams(layoutParams);
-            img.setPadding(10, 10, 10, 10);
-            img.setImageResource(mThumbIds[i]);
+            ImageView img = createRecipeImageView(mThumbIds[indexImg], layoutParams);
+            indexImg++;
             rec.addView(img);
             img.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mCallback.onItemClicked();
+                    mCallback.onItemClicked((int) pair.getKey());
                 }
             });
 
@@ -127,5 +113,46 @@ public class FavouritesFragment extends Fragment{
         }
 
         return rootView;
+    }
+
+    private ImageView createRecipeImageView(Integer index, LinearLayout.LayoutParams layoutParams) {
+        ImageView img = new ImageView(getContext());
+        img.setLayoutParams(layoutParams);
+        img.setPadding(10, 10, 10, 10);
+        img.setImageResource(index);
+        return img;
+    }
+
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
+    private TextView createRecipeTitleTextView(String title) {
+        TextView tvRecipeTitle = new TextView(getContext());
+        tvRecipeTitle.setText(title);
+        tvRecipeTitle.setTextSize(20);
+        tvRecipeTitle.setPadding(10, 100, 20, 60);
+        tvRecipeTitle.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        return tvRecipeTitle;
+    }
+
+    public HashMap<Integer, String> getRecipeTitlesFromSQLite() {
+        mDbHelper = TasteMeDbHelper.getInstance(getContext());
+
+        SQLiteDatabase db = mDbHelper.getReadableDatabase();
+
+        Cursor cursorTitles = db.rawQuery("SELECT * FROM " + TasteMeContract.FavouriteRecipesEntry.TABLE_NAME, null);
+
+        HashMap<Integer, String> recipeIdTitles = new HashMap<Integer, String>();
+
+        if(cursorTitles.moveToFirst()) {
+            do {
+                Integer recipeId = cursorTitles.getInt(
+                        cursorTitles.getColumnIndexOrThrow(TasteMeContract.FavouriteRecipesEntry._ID));
+
+                String recipeName = cursorTitles.getString(
+                        cursorTitles.getColumnIndexOrThrow(TasteMeContract.FavouriteRecipesEntry.COLUMN_TITLE));
+                recipeIdTitles.put(recipeId, recipeName.toString());
+            } while (cursorTitles.moveToNext());
+        }
+
+        return  recipeIdTitles;
     }
 }

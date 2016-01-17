@@ -25,6 +25,8 @@ import com.example.nitro.tasteme.fragments.HomePageFragment;
 import com.example.nitro.tasteme.fragments.ShoppingCartFragment;
 import com.example.nitro.tasteme.services.ReminderService;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         FavouritesFragment.OnItemClickedListener,
@@ -134,8 +136,11 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onItemClicked() {
+    public void onItemClicked(int recipeId) {
         RecipeFragment newRecipeFragment = new RecipeFragment();
+        Bundle args = new Bundle();
+        args.putInt("recipeId", recipeId);
+        newRecipeFragment.setArguments(args);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.mainContainer, newRecipeFragment);
         transaction.addToBackStack(null);
