@@ -4,10 +4,6 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-/**
- * Created by Nitro on 2016-01-13.
- */
-
 public class TasteMeDbHelper extends SQLiteOpenHelper{
 
     private static TasteMeDbHelper sInstance;

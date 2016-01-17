@@ -1,4 +1,4 @@
-package com.example.nitro.tasteme;
+package com.example.nitro.tasteme.maps;
 
 import android.view.View;
 
