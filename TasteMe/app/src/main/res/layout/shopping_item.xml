@@ -3,24 +3,52 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:padding="15dp">
+
+    <CheckBox
+        android:id="@+id/cbShoppingItem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignBottom="@+id/etShoppingItemTitle" />
 
     <EditText xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/etShoppingItemTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"/>
+        android:layout_toRightOf="@id/cbShoppingItem"
+        android:hint="product"/>
+
+    <EditText xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/etShoppingItemQuantity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/etShoppingItemTitle"
+        android:hint="quantity"/>
+
+    <EditText xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/etShoppingItemmeasurement"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/etShoppingItemQuantity"
+        android:hint="measure"/>
 
     <Button
         style="?android:textAppearanceSmall"
-        android:id="@+id/btnSaveProduct"
+        android:id="@+id/btnSaveItem"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="save"
         android:textStyle="bold"
         android:background="#F43B03"
         android:textColor="#ffffff"
-        android:layout_alignParentRight="true" />
+        android:onClick="saveItemInDb"
+        android:gravity="center_vertical|center"
+        android:layout_alignBottom="@+id/etShoppingItemmeasurement"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>
 

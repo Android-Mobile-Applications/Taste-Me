@@ -15,6 +15,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
 
 import com.example.nitro.tasteme.fragments.HomeRecipeFragment;
 import com.example.nitro.tasteme.fragments.RecipeFragment;
@@ -188,4 +190,11 @@ public class MainActivity extends AppCompatActivity
             }
         }
     }
+
+    public void saveItemInDb(View v){
+        Toast.makeText(this, "Saved in Db",
+                Toast.LENGTH_SHORT).show();
+
+    }
+
 }

@@ -10,9 +10,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.nitro.tasteme.Ingredient;
 import com.example.nitro.tasteme.R;
@@ -27,6 +29,8 @@ import java.util.List;
 public class RecipeFragment extends Fragment {
 
     TasteMeDbHelper mDbHelper;
+    SQLiteDatabase db;
+    Integer recipeId;
 
     public RecipeFragment() {
         // Required empty public constructor
@@ -39,11 +43,11 @@ public class RecipeFragment extends Fragment {
 
 
         Bundle bundle = getArguments();
-        Integer recipeId = bundle.getInt("recipeId");
+        recipeId = bundle.getInt("recipeId");
 
         mDbHelper = TasteMeDbHelper.getInstance(getContext());
+        db = mDbHelper.getReadableDatabase();
 
-        SQLiteDatabase db = mDbHelper.getReadableDatabase();
         //Get recipe Info from SQLITE
         getRecipeInfoFromSQLite(db, recipeId, rootView);
 
@@ -51,7 +55,6 @@ public class RecipeFragment extends Fragment {
         Cursor cursorRecipeIngr = db.rawQuery("SELECT * FROM " + TasteMeContract.IngredientsEntry.TABLE_NAME +
                 " WHERE " + TasteMeContract.IngredientsEntry.COLUMN_RECIPE_ID + " = ?",
                 new String[]{recipeId.toString()});
-
         ArrayList<Ingredient> ingredients = new ArrayList<Ingredient>();
          if(cursorRecipeIngr.moveToFirst()) {
             do {
@@ -70,7 +73,29 @@ public class RecipeFragment extends Fragment {
             ingredientsList.addView(llIngredient);
         }
 
+        //Add to Shopping Cart
+
+
+
+        Button toShoppingCart = (Button) rootView.findViewById(R.id.btnAddFavToShoppingCart);
+        toShoppingCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addToShoppingCart(db, recipeId);
+            }
+        });
+
         return rootView;
+    }
+
+    private void addToShoppingCart(SQLiteDatabase db, Integer recipeId) {
+        Cursor cursorAddIngrToShopping = db.rawQuery("UPDATE " + TasteMeContract.IngredientsEntry.TABLE_NAME +
+                        " SET " + TasteMeContract.IngredientsEntry.COLUMN_INSHOPPINGCART + " = ?" +
+                        " WHERE " + TasteMeContract.IngredientsEntry.COLUMN_RECIPE_ID + " = ?",
+                new String[]{"1", recipeId.toString()});
+        cursorAddIngrToShopping.moveToFirst();
+        Toast.makeText(getContext(), "Added to Shopping Cart!",
+                Toast.LENGTH_SHORT).show();
     }
 
     private Ingredient getIngredientsForRecipe(Cursor cursorRecipeIngr) {
