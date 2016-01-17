@@ -102,6 +102,24 @@ public class MapsActivity extends FragmentActivity implements
                     case "Chairo Paceño":
                         image.setImageResource(R.drawable.sample_2);
                         break;
+                    case "Chocolate Chip Muffins":
+                        image.setImageResource(R.drawable.sample_4);
+                        break;
+                    case "Rise with Anshoa":
+                        image.setImageResource(R.drawable.sample_3);
+                        break;
+                    case "Green salad":
+                        image.setImageResource(R.drawable.sample_5);
+                        break;
+                    case "Can chua":
+                        image.setImageResource(R.drawable.sample_6);
+                        break;
+                    case "Big Mac Homemade":
+                        image.setImageResource(R.drawable.sample_7);
+                        break;
+                    case "Sushi Moa":
+                        image.setImageResource(R.drawable.sample_8);
+                        break;
                 }
 
                 title.setText(marker.getTitle());
@@ -116,7 +134,7 @@ public class MapsActivity extends FragmentActivity implements
                 .position(new LatLng(4.210484, 101.975766))
                 .title("Curry Mee")
                 .snippet("Malaysia")
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW)));
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
         mMap.addMarker(new MarkerOptions()
                 .position(new LatLng(39.074208, 21.824312))
                 .title("Pastitsio")
@@ -126,7 +144,37 @@ public class MapsActivity extends FragmentActivity implements
                 .position(new LatLng(-16.290154, -63.588653))
                 .title("Chairo Paceño")
                 .snippet("Bolivia")
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
+        mMap.addMarker(new MarkerOptions()
+                .position(new LatLng(41.156944, -82.106323))
+                .title("Chocolate Chip Muffins")
+                .snippet("Chicago")
                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE)));
+        mMap.addMarker(new MarkerOptions()
+                .position(new LatLng(35.689487, 139.691706))
+                .title("Rise with Anshoa")
+                .snippet("Japon")
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
+        mMap.addMarker(new MarkerOptions()
+                .position(new LatLng(15.870032, 100.992541))
+                .title("Green salad")
+                .snippet("Tailand")
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
+        mMap.addMarker(new MarkerOptions()
+                .position(new LatLng(48.856614, 2.352222))
+                .title("Can chua")
+                .snippet("Paris")
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
+        mMap.addMarker(new MarkerOptions()
+                .position(new LatLng(40.712784, -74.005941))
+                .title("Big Mac Homemade")
+                .snippet("New York")
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
+        mMap.addMarker(new MarkerOptions()
+                .position(new LatLng(39.904211, 116.407395))
+                .title("Sushi Moa")
+                .snippet("Benjing")
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
 
 
         //mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));

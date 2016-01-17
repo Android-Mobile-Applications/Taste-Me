@@ -1,4 +1,4 @@
-package com.example.nitro.tasteme;
+package com.example.nitro.tasteme.auth;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,7 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.android.gms.maps.UiSettings;
+import com.example.nitro.tasteme.R;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
@@ -33,11 +33,12 @@ public class RegisterActivity  extends AppCompatActivity  {
                 if (!password.getText().toString().equals(confirmPassword.getText().toString())) {
                     Context context = getApplicationContext();
                     CharSequence text = "Passwords doesn't match";
-                    int duration = Toast.LENGTH_SHORT;
-
-                    Toast toast = Toast.makeText(context, text, duration);
-                    toast.setGravity(Gravity.TOP|Gravity.LEFT, 0, 0);
-                    toast.show();
+                    showToastrMessage(context, text);
+                    return;
+                } else if (username.getText().length() < 6 || username.getText().length() > 20) {
+                    Context context = getApplicationContext();
+                    CharSequence text = "Username must be between 6 and 20 character long";
+                    showToastrMessage(context, text);
                     return;
                 }
 
@@ -53,26 +54,28 @@ public class RegisterActivity  extends AppCompatActivity  {
                         if (e == null) {
                             Context context = getApplicationContext();
                             CharSequence text = "Sign up successful";
-                            int duration = Toast.LENGTH_SHORT;
 
-                            Toast toast = Toast.makeText(context, text, duration);
-                            toast.setGravity(Gravity.TOP|Gravity.LEFT, 0, 0);
-                            toast.show();
+                            showToastrMessage(context, text);
+
                             Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
                             startActivity(intent);
                         } else {
                             Context context = getApplicationContext();
                             CharSequence text = "Ops, cannot sign up right now";
-                            int duration = Toast.LENGTH_SHORT;
-
-                            Toast toast = Toast.makeText(context, text, duration);
-                            toast.setGravity(Gravity.TOP|Gravity.LEFT, 0, 0);
-                            toast.show();
+                            showToastrMessage(context, text);
                         }
                     }
                 });
             }
         });
 
+    }
+
+    private void showToastrMessage(Context context, CharSequence message) {
+        int duration = Toast.LENGTH_SHORT;
+
+        Toast toast = Toast.makeText(context, message, duration);
+        toast.setGravity(Gravity.TOP|Gravity.LEFT, 0, 0);
+        toast.show();
     }
 }
