@@ -19,11 +19,11 @@ import com.example.nitro.tasteme.data.TasteMeContract;
 import com.example.nitro.tasteme.data.TasteMeDbHelper;
 
 import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class RecipeFragment extends Fragment {
-
-    public TasteMeDbHelper mDbHelper;
 
     private LinearLayout ingredientsList;
     private String[] testIngredients = {
@@ -52,10 +52,6 @@ public class RecipeFragment extends Fragment {
         getActivity().setTitle(title.getText().toString());
 
         ingredientsList = (LinearLayout) rootView.findViewById(R.id.llRecipeIngredients);
-
-        mDbHelper = TasteMeDbHelper.getInstance(getContext());
-
-        SQLiteDatabase db = mDbHelper.getReadableDatabase();
 
         for (String ingredient : testIngredients) {
             TextView tvIngredient = new TextView(getContext());

@@ -35,6 +35,18 @@ public class MapsActivity extends FragmentActivity implements
         GoogleMap.OnInfoWindowClickListener,
         OnMapReadyCallback {
 
+    //------------
+    //ZA MAPS TO FRAGMENT:
+    OnInfoWindowCustomClickListener mapsCallback;
+
+    // The container Activity must implement this interface so the frag can deliver messages
+    public interface OnInfoWindowCustomClickListener {
+        /** Called by HeadlinesFragment when a list item is selected */
+        public void onInfoWindowCustomClick();
+    }
+
+    //---------------
+
     private GoogleMap mMap;
 
     @Override
@@ -130,11 +142,9 @@ public class MapsActivity extends FragmentActivity implements
     public void onInfoWindowClick(Marker marker) {
         Intent intent = new Intent(MapsActivity.this, MainActivity.class);
 
-        HomeRecipeFragment newHomeRecipeFragment = new HomeRecipeFragment();
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.mainContainer, newHomeRecipeFragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
+        //------------
+        //ZA MAPS TO FRAGMENT:
+        mapsCallback.onInfoWindowCustomClick();
 
         startActivity(intent);
     }

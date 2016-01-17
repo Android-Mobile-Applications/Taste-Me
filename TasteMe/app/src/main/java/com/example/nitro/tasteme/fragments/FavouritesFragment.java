@@ -2,6 +2,8 @@ package com.example.nitro.tasteme.fragments;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -22,13 +24,20 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.nitro.tasteme.R;
+import com.example.nitro.tasteme.data.TasteMeContract;
+import com.example.nitro.tasteme.data.TasteMeDbHelper;
 
 import org.w3c.dom.Text;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Nitro on 2016-01-08.
  */
 public class FavouritesFragment extends Fragment{
+
+    TasteMeDbHelper mDbHelper;
 
     LinearLayout favouriteRecipes;
     private final static Integer[] mThumbIds = {
@@ -74,14 +83,29 @@ public class FavouritesFragment extends Fragment{
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(1400, 1400);
         layoutParams.gravity = Gravity.CENTER_VERTICAL;
 
+        mDbHelper = TasteMeDbHelper.getInstance(getContext());
 
-        for (Integer recipeImg : mThumbIds) {
+        SQLiteDatabase db = mDbHelper.getReadableDatabase();
+
+        Cursor cursorTitles = db.rawQuery("SELECT * FROM " + TasteMeContract.FavouriteRecipesEntry.TABLE_NAME, null);
+
+        List recipeTitles = new ArrayList();
+
+        if(cursorTitles.moveToFirst()) {
+            do {
+                String recipeName = cursorTitles.getString(
+                        cursorTitles.getColumnIndexOrThrow(TasteMeContract.FavouriteRecipesEntry.COLUMN_TITLE));
+                recipeTitles.add(recipeName.toString());
+            } while (cursorTitles.moveToNext());
+        }
+
+        for (int i = 0; i < recipeTitles.size(); i++) {
 
             LinearLayout rec = new LinearLayout(getContext());
             rec.setOrientation(LinearLayout.VERTICAL);
 
             TextView tvrecipeTitle = new TextView(getContext());
-            tvrecipeTitle.setText("Recipe Title");
+            tvrecipeTitle.setText((recipeTitles.get(i).toString()));
             tvrecipeTitle.setTextSize(20);
             tvrecipeTitle.setPadding(10, 100, 20, 60);
             tvrecipeTitle.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
@@ -90,7 +114,7 @@ public class FavouritesFragment extends Fragment{
             ImageView img = new ImageView(getContext());
             img.setLayoutParams(layoutParams);
             img.setPadding(10, 10, 10, 10);
-            img.setImageResource(recipeImg);
+            img.setImageResource(mThumbIds[i]);
             rec.addView(img);
             img.setOnClickListener(new View.OnClickListener() {
                 @Override
