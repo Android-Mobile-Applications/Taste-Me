@@ -140,12 +140,7 @@ public class MapsActivity extends FragmentActivity implements
 
     @Override
     public void onInfoWindowClick(Marker marker) {
-        Intent intent = new Intent(MapsActivity.this, MainActivity.class);
-
-        //------------
-        //ZA MAPS TO FRAGMENT:
-        mapsCallback.onInfoWindowCustomClick();
-
-        startActivity(intent);
+        HomeRecipeFragment fr = new HomeRecipeFragment ();
+        getSupportFragmentManager().beginTransaction().replace(R.id.map, fr).commit();
     }
 }

@@ -28,8 +28,6 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         FavouritesFragment.OnItemClickedListener,
         HomePageFragment.OnGridViewItemClickedListener,
-        //------------
-        //ZA MAPS TO FRAGMENT:
         MapsActivity.OnInfoWindowCustomClickListener {
 
     ViewPager viewPager;
@@ -151,8 +149,6 @@ public class MainActivity extends AppCompatActivity
         transaction.commit();
     }
 
-    //------------
-    //ZA MAPS TO FRAGMENT:
     @Override
     public void onInfoWindowCustomClick() {
         HomeRecipeFragment newHomeRecipeFragment = new HomeRecipeFragment();
@@ -161,7 +157,6 @@ public class MainActivity extends AppCompatActivity
         transaction.addToBackStack(null);
         transaction.commit();
     }
-    //------------------------
 
     private class MyPagerAdapter extends FragmentPagerAdapter {
 
