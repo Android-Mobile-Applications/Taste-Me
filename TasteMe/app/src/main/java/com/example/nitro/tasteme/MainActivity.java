@@ -27,7 +27,10 @@ import com.example.nitro.tasteme.fragments.ShoppingCartFragment;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         FavouritesFragment.OnItemClickedListener,
-        HomePageFragment.OnGridViewItemClickedListener {
+        HomePageFragment.OnGridViewItemClickedListener,
+        //------------
+        //ZA MAPS TO FRAGMENT:
+        MapsActivity.OnInfoWindowCustomClickListener {
 
     ViewPager viewPager;
 
@@ -147,6 +150,18 @@ public class MainActivity extends AppCompatActivity
         transaction.addToBackStack(null);
         transaction.commit();
     }
+
+    //------------
+    //ZA MAPS TO FRAGMENT:
+    @Override
+    public void onInfoWindowCustomClick() {
+        HomeRecipeFragment newHomeRecipeFragment = new HomeRecipeFragment();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.mainContainer, newHomeRecipeFragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+    //------------------------
 
     private class MyPagerAdapter extends FragmentPagerAdapter {
 
