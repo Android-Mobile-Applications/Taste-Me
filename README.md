@@ -24,6 +24,7 @@
       - Rose: Sweet dishes
     - They can click on marker and then an info window appears with image of the dishes, name and location (country/city/region)
     - On clicked info window the recipe is opened with more details
+<p align="center"><a href="https://github.com/Android-Mobile-Applications/Taste-Me"><img src="https://raw.githubusercontent.com/Android-Mobile-Applications/Taste-Me/master/imgs/Screenshot_2016-01-18-09-43-03.png" /></a></p>
  
 ### Application Storage (SQLite)
   1. Saving all favourites recipe to SQLite
@@ -63,6 +64,8 @@
     - Used on favourites list
   3. Touch 
     - In every part of the application
+  4. Long Press 
+    - Zoom in a picture
 
 ### High-quality code and reusability
   1. The application code is separated into consistent and cohesive modules. 
